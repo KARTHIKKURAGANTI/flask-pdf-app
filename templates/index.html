@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MCQ GENERATOR</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f2f2f2;
+            padding: 40px;
+            margin: 0;
+        }
+
+        h2, h3 {
+            text-align: center;
+            color: #9e0202;
+        }
+
+        form {
+            background-color: rgb(188, 172, 172);
+            padding: 25px;
+            border-radius: 10px;
+            max-width: 400px;
+            margin: 20px auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        input[type="file"] {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #106ccf;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.4s ease;
+        }
+
+        form button:hover {
+            background-color: blue
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+        }
+
+        .mcq-container {
+            background-color: white;
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        ol {
+            padding-left: 20px;
+        }
+
+        ol li {
+            margin-bottom: 15px;
+        }
+
+        ol[type="A"] li {
+            background-color: #f1f1f1;
+            padding: 6px 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Upload PDF or Text File</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".txt,.pdf" required>
+        <button type="submit">Upload</button>
+    </form>
+
+    {% if error %}
+        <p class="error-message">{{ error }}</p>
+    {% endif %}
+
+    {% if mcqs %}
+        <div class="mcq-container">
+            <h3>Generated MCQs with Options</h3>
+            <ol>
+                {% for mcq in mcqs %}
+                    <li>
+                        <strong>{{ mcq.question }}</strong>
+                        <ol type="A">
+                            {% for option in mcq.Options %}
+                                <li>{{ option }}</li>
+                            {% endfor %}
+                        </ol>
+                    </li>
+                {% endfor %}
+            </ol>
+        </div>
+    {% endif %}
+
+</body>
+</html>
